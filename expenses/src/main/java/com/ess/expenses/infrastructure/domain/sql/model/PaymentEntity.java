@@ -21,6 +21,7 @@ public class PaymentEntity {
     private Long id;
 
     @Column(name = "TYPE")
+    @Enumerated(EnumType.STRING)
     private Type type;
 
     @Column(name = "MY_COMPANY")
@@ -57,6 +58,7 @@ public class PaymentEntity {
     private Refundable refundable;
 
     @Column(name = "REFUNDABLE_MODE")
+    @Enumerated(EnumType.STRING)
     private RefundableMode refundableMode;
 
 }
