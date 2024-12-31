@@ -5,6 +5,8 @@ import com.ess.expenses.core.utils.RefundableType;
 import com.ess.expenses.core.utils.Type;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import com.ess.expenses.core.utils.Type;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,4 +33,12 @@ public class PaymentEntity {
     private String notes;
     private RefundableType refundableType=RefundableType.NO;
     private RefundableMode refundableMode;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PROD_ID")
+    private  Long id;
+
+    @Column(name = "TYPE")
+    private Type type;
+
 }
