@@ -21,7 +21,7 @@ public class ReceivableDto {
     private String services;
     private Date date;
     private String invoiceNumber;
-    private Date inviceDate;
+    private Date invoiceDate;
     private Date dueDate;
     private double invoiceAmount;
     private String paymentMode;
