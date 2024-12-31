@@ -23,4 +23,7 @@ public class ReceivableServiceImpl implements ReceivableService{
 
        return receivableDto1;
     }
+
+
+
 }
