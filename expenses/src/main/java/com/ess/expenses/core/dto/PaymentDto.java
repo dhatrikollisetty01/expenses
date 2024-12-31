@@ -1,5 +1,7 @@
 package com.ess.expenses.core.dto;
 
+import com.ess.expenses.core.utils.RefundableMode;
+import com.ess.expenses.core.utils.RefundableType;
 import com.ess.expenses.core.utils.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +21,11 @@ public class PaymentDto {
     private String purpose;
     private Double amount;
     private Date date;
+    private String transactionMode;
+    private String referenceNumber;
+    private String notes;
+    private RefundableType refundableType=RefundableType.NO;
+    private RefundableMode refundableMode;
+
 
 }
