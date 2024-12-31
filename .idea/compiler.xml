@@ -10,8 +10,5 @@
         <module name="expenses.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="expenses" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -31,6 +31,7 @@ public class ReceivableDto {
     private double totalReceivableAmount;
     private double receivedAmountTillDate;
     private double yetToReceivedAmount;
+    private Integer delFlag = 1;
 
 
 }

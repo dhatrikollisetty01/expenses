@@ -19,9 +19,14 @@ import java.util.Date;
 @NoArgsConstructor
 @Table
 public class PaymentEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PROD_ID")
+    private  Long id;
 
-    private Long id;
+    @Column(name = "TYPE")
     private Type type;
+
     private String myCompany;
     private String department;
     private String primaryContact;
@@ -33,12 +38,6 @@ public class PaymentEntity {
     private String notes;
     private RefundableType refundableType=RefundableType.NO;
     private RefundableMode refundableMode;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PROD_ID")
-    private  Long id;
 
-    @Column(name = "TYPE")
-    private Type type;
 
 }
