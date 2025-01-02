@@ -10,7 +10,6 @@ public interface MapperConfig {
     PaymentDto toPaymentDto(PaymentEntity paymentEntity);
     PaymentEntity toPaymentEntity(PaymentDto paymentDto);
 
-
     ReceivableDto toReceivableDto(ReceivableEntity receivableEntity);
     ReceivableEntity toReceivableEntity(ReceivableDto receivableDto);
 }
