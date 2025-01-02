@@ -6,7 +6,6 @@ import com.ess.expenses.core.utils.Type;
 import com.ess.expenses.infrastructure.domain.sql.model.ReceivableEntity;
 import com.ess.expenses.infrastructure.domain.sql.repository.ReceivableRepository;
 import com.ess.expenses.infrastructure.domain.sql.service.handler.MapperConfig;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -107,53 +106,31 @@ public class ReceivableServiceImpl implements ReceivableService{
             receivableEntity.setYetToReceivedAmount(receivableDto.getYetToReceivedAmount());
         }
 
-        // Save the updated entity
         ReceivableEntity updatedEntity = receivableRepository.save(receivableEntity);
+        ReceivableDto updatedDto = mapperConfig.toReceivableDto(updatedEntity);
+        return updatedDto;
 
-        // Map the updated entity to DTO and return
-        return mapperConfig.toReceivableDto(updatedEntity);
     }
-
-
-
-
-
-
-//    @Override
-//    public ReceivableDto updateReceivable(Long id, ReceivableDto receivableDto) {
-//        ReceivableEntity receivableEntity=receivableRepository.findById(id).get();
-//        receivableEntity.setId(receivableDto.getId());
-//        receivableEntity.setType(receivableDto.getType());
-//        receivableEntity.setBillingAddress(receivableDto.getBillingAddress());
-//        receivableEntity.setPrimaryContact(receivableDto.getPrimaryContact());
-//        receivableEntity.setReceivedAmount(receivableDto.getReceivedAmount());
-//        receivableEntity.setServices(receivableDto.getServices());
-//        receivableEntity.setDate(receivableDto.getDate());
-//        receivableEntity.setInvoiceNumber(receivableDto.getInvoiceNumber());
-//        receivableEntity.setInvoiceDate(receivableDto.getInvoiceDate());
-//        receivableEntity.setDueDate(receivableDto.getDueDate());
-//        receivableEntity.setInvoiceAmount(receivableDto.getInvoiceAmount());
-//        receivableEntity.setPaymentMode(receivableDto.getPaymentMode());
-//        receivableEntity.setReferenceNumber(receivableDto.getReferenceNumber());
-//        receivableEntity.setAdjustmentAmount(receivableDto.getAdjustmentAmount());
-//        receivableEntity.setNotes(receivableDto.getNotes());
-//        receivableEntity.setTotalReceivableAmount(receivableDto.getTotalReceivableAmount());
-//        receivableEntity.setReceivedAmountTillDate(receivableDto.getReceivedAmountTillDate());
-//        receivableEntity.setYetToReceivedAmount(receivableDto.getYetToReceivedAmount());
-//
-//        ReceivableEntity updatedEntity = receivableRepository.save(receivableEntity);
-//        ReceivableDto updatedDto = mapperConfig.toReceivableDto(updatedEntity);
-//        return updatedDto;
-//
-//    }
 
     @Override
     public ReceivableDto softDeleteReceivable(Long id) {
-        ReceivableEntity receivableEntity = receivableRepository.findById(id).get();
-        receivableEntity.setDelFlag(0);
-        ReceivableEntity receivableEntity1=receivableRepository.save(receivableEntity);
-        ReceivableDto receivableDto=mapperConfig.toReceivableDto(receivableEntity1);
-        return receivableDto;
+        // Validate the ID
+        if (id == null) {
+            throw new IllegalArgumentException("The given ID must not be null.");
+        }
 
+        // Retrieve the entity or throw an exception if not found
+        ReceivableEntity receivableEntity = receivableRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Receivable with ID " + id + " not found"));
+
+        // Perform the soft delete by setting the delFlag to 1
+        receivableEntity.setDelFlag(1);
+
+        // Save the updated entity
+        ReceivableEntity updatedEntity = receivableRepository.save(receivableEntity);
+
+        // Convert the entity to DTO
+        return mapperConfig.toReceivableDto(updatedEntity);
     }
+
 }

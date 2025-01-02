@@ -1,10 +1,7 @@
 package com.ess.expenses.infrastructure.domain.sql.model;
 
+import com.ess.expenses.core.utils.Refundable;
 import com.ess.expenses.core.utils.RefundableMode;
-import com.ess.expenses.core.utils.RefundableType;
-import com.ess.expenses.core.utils.Type;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import com.ess.expenses.core.utils.Type;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,27 +14,51 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "payments")
 public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PROD_ID")
-    private  Long id;
+    private Long id;
 
     @Column(name = "TYPE")
+    @Enumerated(EnumType.STRING)
     private Type type;
 
+    @Column(name = "MY_COMPANY")
     private String myCompany;
-    private String department;
-    private String primaryContact;
-    private String purpose;
-    private Double amount;
-    private Date date;
-    private String transactionMode;
-    private String referenceNumber;
-    private String notes;
-    private RefundableType refundableType=RefundableType.NO;
-    private RefundableMode refundableMode;
 
+    @Column(name = "DEPARTMENT")
+    private String department;
+
+    @Column(name = "PRIMARY_CONTACT")
+    private String primaryContact;
+
+    @Column(name = "PURPOSE")
+    private String purpose;
+
+    @Column(name = "AMOUNT")
+    private Double amount;
+
+    @Column(name = "DATE")
+    private Date date;
+
+    @Column(name = "TRANSACTION_MODE")
+    private String transactionMode;
+
+    @Column(name = "REFERENCE_NO")
+    private String referenceNo;
+
+    @Column(name = "ATTACHMENT")
+    private String attachment;
+
+    @Column(name = "NOTES")
+    private String notes;
+
+    @Column(name = "REFUNDABLE")
+    private Refundable refundable;
+
+    @Column(name = "REFUNDABLE_MODE")
+    @Enumerated(EnumType.STRING)
+    private RefundableMode refundableMode;
 
 }
