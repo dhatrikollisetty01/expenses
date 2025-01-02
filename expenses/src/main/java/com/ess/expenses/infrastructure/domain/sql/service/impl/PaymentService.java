@@ -1,9 +1,10 @@
 package com.ess.expenses.infrastructure.domain.sql.service.impl;
 
 import com.ess.expenses.core.dto.PaymentDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface PaymentService {
 
     PaymentDto createPayment(PaymentDto paymentDto);

@@ -25,9 +25,6 @@ public class PaymentServiceImp implements PaymentService{
     private MapperConfig mapperConfig;
 
     @Autowired
-    private PaymentService paymentService;
-
-    @Autowired
     PaymentRepository paymentRepository;
     @Override
     public PaymentDto createPayment(PaymentDto paymentDto) {
@@ -115,7 +112,7 @@ public class PaymentServiceImp implements PaymentService{
 
         // Retrieve the entity or throw an exception if not found
         PaymentEntity paymentEntity = paymentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Receivable with ID " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Payment with ID " + id + " not found"));
 
         // Perform the soft delete by setting the delFlag to 1
       //  PaymentEntity.setDelFlag(1);
