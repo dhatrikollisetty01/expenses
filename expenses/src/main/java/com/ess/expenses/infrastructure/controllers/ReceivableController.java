@@ -1,5 +1,6 @@
 package com.ess.expenses.infrastructure.controllers;
 
+import com.ess.expenses.core.constants.ReceivableContants;
 import com.ess.expenses.core.dto.ReceivableDto;
 import com.ess.expenses.infrastructure.domain.sql.service.impl.ReceivableService;
 import com.ess.expenses.infrastructure.domain.sql.service.impl.ReceivableServiceImpl;

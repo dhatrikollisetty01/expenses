@@ -6,6 +6,7 @@ import com.ess.expenses.core.utils.Type;
 import com.ess.expenses.infrastructure.domain.sql.model.ReceivableEntity;
 import com.ess.expenses.infrastructure.domain.sql.repository.ReceivableRepository;
 import com.ess.expenses.infrastructure.domain.sql.service.handler.MapperConfig;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -124,7 +125,7 @@ public class ReceivableServiceImpl implements ReceivableService{
                 .orElseThrow(() -> new EntityNotFoundException("Receivable with ID " + id + " not found"));
 
         // Perform the soft delete by setting the delFlag to 1
-        receivableEntity.setDelFlag(1);
+        receivableEntity.setDelFlag(0);
 
         // Save the updated entity
         ReceivableEntity updatedEntity = receivableRepository.save(receivableEntity);
