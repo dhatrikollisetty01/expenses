@@ -45,8 +45,8 @@ public class ReceivableController {
     }
 
     @DeleteMapping("/{Id}")
-    public ResponseEntity<Void> deleteReceivable(@PathVariable Long Id) {
-        receivableServiceImpl.softDeleteReceivable(Id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<ReceivableDto> deleteReceivable(@PathVariable Long Id) {
+       ReceivableDto receivableDto= receivableServiceImpl.softDeleteReceivable(Id);
+        return ResponseEntity.ok(receivableDto);
     }
 }
