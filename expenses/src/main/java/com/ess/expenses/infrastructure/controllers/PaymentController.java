@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping(PaymentConstants.PAYMENT_PATH_URL)
 public class PaymentController {
 

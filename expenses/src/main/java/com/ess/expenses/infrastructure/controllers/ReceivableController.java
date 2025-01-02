@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
+
 @RequestMapping(ReceivableContants.RECEIVABLE_PATH_URL)
 public class ReceivableController {
     @Autowired

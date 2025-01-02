@@ -8,7 +8,7 @@ public class PaymentConstants {
     public static final String GET_BY_ID="/getById";
 
     public static final String GET_ALL="/getAll";
-    public static final String DELETE="/delete";
+    public static final String DELETE="/delete/{id}";
 
-    public static final String  UPDATE="/update";
+    public static final String  UPDATE="/update/{id}";
 }
