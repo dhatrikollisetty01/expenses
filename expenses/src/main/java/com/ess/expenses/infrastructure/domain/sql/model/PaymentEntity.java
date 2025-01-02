@@ -3,11 +3,13 @@ package com.ess.expenses.infrastructure.domain.sql.model;
 import com.ess.expenses.core.utils.Refundable;
 import com.ess.expenses.core.utils.RefundableMode;
 import com.ess.expenses.core.utils.Type;
+import com.ess.expenses.infrastructure.domain.sql.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
@@ -15,7 +17,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "payments")
-public class PaymentEntity {
+public class PaymentEntity extends Auditable implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

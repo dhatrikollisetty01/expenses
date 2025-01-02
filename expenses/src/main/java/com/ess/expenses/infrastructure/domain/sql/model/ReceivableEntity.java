@@ -1,18 +1,20 @@
 package com.ess.expenses.infrastructure.domain.sql.model;
 
 import com.ess.expenses.core.utils.Type;
+import com.ess.expenses.infrastructure.domain.sql.audit.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "receivables")
-public class ReceivableEntity {
+public class ReceivableEntity extends Auditable implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

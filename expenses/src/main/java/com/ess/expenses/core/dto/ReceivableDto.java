@@ -2,6 +2,7 @@ package com.ess.expenses.core.dto;
 
 import com.ess.expenses.core.utils.PurposeType;
 import com.ess.expenses.core.utils.Type;
+import com.ess.expenses.infrastructure.domain.sql.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReceivableDto {
+public class ReceivableDto extends Auditable {
     private Long id;
     private Type type;
     private String billingAddress;
