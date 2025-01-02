@@ -1,6 +1,5 @@
 package com.ess.expenses.infrastructure.domain.sql.service.impl;
 
-import com.ess.expenses.core.dto.PaymentDto;
 import com.ess.expenses.core.dto.ReceivableDto;
 import com.ess.expenses.core.req.ExpensesReq;
 import com.ess.expenses.core.resp.ApiResponse;
@@ -13,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 public class ReceivableServiceImpl implements ReceivableService {
