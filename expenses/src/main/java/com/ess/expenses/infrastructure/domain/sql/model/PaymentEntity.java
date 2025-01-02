@@ -61,4 +61,6 @@ public class PaymentEntity {
     @Enumerated(EnumType.STRING)
     private RefundableMode refundableMode;
 
+    private Integer delFlag=1;
+
 }

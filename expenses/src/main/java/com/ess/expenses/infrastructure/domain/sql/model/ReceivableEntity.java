@@ -73,7 +73,6 @@ public class ReceivableEntity {
     @Column(name = "YET_TO_RECEIVED_AMOUNT")
     private double yetToReceivedAmount;
 
-
     @Column(name = "IS_ACTIVE")
     private Integer delFlag = 1;
 }

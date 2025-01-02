@@ -1,5 +1,6 @@
 package com.ess.expenses.core.dto;
 
+import com.ess.expenses.core.resp.ApiResponse;
 import com.ess.expenses.core.utils.Refundable;
 import com.ess.expenses.core.utils.RefundableMode;
 import com.ess.expenses.core.utils.Type;
@@ -12,7 +13,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PaymentDto {
+public class PaymentDto  {
     private Long id;
     private Type type;
     private String myCompany;
@@ -27,6 +28,7 @@ public class PaymentDto {
     private String notes;
     private Refundable refundable;
     private RefundableMode refundableMode;
+    private int delFlag=1;
 
 
 
