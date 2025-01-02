@@ -48,10 +48,6 @@ public class ReceivableServiceImpl implements ReceivableService{
     return invoiceDtos ;
 
     }
-
-
-
-
     @Override
     public ReceivableDto updateReceivable(Long id, ReceivableDto receivableDto) {
         // Fetch the existing entity
@@ -111,11 +107,10 @@ public class ReceivableServiceImpl implements ReceivableService{
             receivableEntity.setYetToReceivedAmount(receivableDto.getYetToReceivedAmount());
         }
 
-        // Save the updated entity
         ReceivableEntity updatedEntity = receivableRepository.save(receivableEntity);
+        ReceivableDto updatedDto = mapperConfig.toReceivableDto(updatedEntity);
+        return updatedDto;
 
-        // Map the updated entity to DTO and return
-        return mapperConfig.toReceivableDto(updatedEntity);
     }
 
     @Override
@@ -130,7 +125,7 @@ public class ReceivableServiceImpl implements ReceivableService{
                 .orElseThrow(() -> new EntityNotFoundException("Receivable with ID " + id + " not found"));
 
         // Perform the soft delete by setting the delFlag to 1
-        receivableEntity.setDelFlag(1);
+        receivableEntity.setDelFlag(0);
 
         // Save the updated entity
         ReceivableEntity updatedEntity = receivableRepository.save(receivableEntity);

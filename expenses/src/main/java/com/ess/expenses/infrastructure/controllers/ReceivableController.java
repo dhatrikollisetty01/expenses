@@ -1,6 +1,5 @@
 package com.ess.expenses.infrastructure.controllers;
 
-import com.ess.expenses.core.constants.PaymentConstants;
 import com.ess.expenses.core.constants.ReceivableContants;
 import com.ess.expenses.core.dto.ReceivableDto;
 import com.ess.expenses.infrastructure.domain.sql.service.impl.ReceivableService;
@@ -41,6 +40,7 @@ public class ReceivableController {
     @PutMapping(ReceivableContants.UPDATE)
     public ResponseEntity<ReceivableDto> updateReceivable(@PathVariable Long id, @RequestBody ReceivableDto receivableDto) {
         ReceivableDto updatedReceivable = receivableServiceImpl.updateReceivable(id, receivableDto);
+
         return ResponseEntity.ok(updatedReceivable);
 
     }
