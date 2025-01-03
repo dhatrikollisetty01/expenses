@@ -53,7 +53,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public ApiResponse getAllPayments() {
+    public ApiResponse getAllPayments(){
         List<PaymentDto> paymentDto = paymentRepository.findAll().stream()
                 .map(mapperConfig::toPaymentDto)
                 .filter(payment -> payment.getDelFlag() == 1)
@@ -93,42 +93,55 @@ public class PaymentServiceImpl implements PaymentService {
         if (paymentDto.getType() != null) {
             paymentEntity.setType(paymentDto.getType());
         }
-        if (paymentDto.getMyCompany() != null) {
-            paymentEntity.setMyCompany(paymentDto.getMyCompany());
+
+        if (paymentDto.getPaidTo() != null) {  // Changed from 'myCompany'
+            paymentEntity.setPaidTo(paymentDto.getPaidTo());
         }
+
         if (paymentDto.getDepartment() != null) {
             paymentEntity.setDepartment(paymentDto.getDepartment());
         }
+
         if (paymentDto.getPrimaryContact() != null) {
             paymentEntity.setPrimaryContact(paymentDto.getPrimaryContact());
         }
-//        if (paymentDto.getPurpose() != null) {
-//            paymentEntity.setPurpose(paymentDto.getPurpose());
-//        }
+
         if (paymentDto.getAmount() != null) {
             paymentEntity.setAmount(paymentDto.getAmount());
         }
-        if (paymentDto.getDate() != null) {
-            paymentEntity.setDate(paymentDto.getDate());
+
+        if (paymentDto.getPaidDate() != null) {  // Changed from 'getDate' to 'getPaidDate'
+            paymentEntity.setPaidDate(paymentDto.getPaidDate());
         }
+
+        if (paymentDto.getPurpose() != null) {
+            paymentEntity.setPurpose(paymentDto.getPurpose());
+        }
+
         if (paymentDto.getTransactionMode() != null) {
             paymentEntity.setTransactionMode(paymentDto.getTransactionMode());
         }
-//        if (paymentDto.getReferenceNo() != null) {
-//            paymentEntity.setReferenceNo(paymentDto.getReferenceNo());
-//        }
-        if (paymentDto.getAttachments() != null) {
-            paymentEntity.setAttachment(paymentDto.getAttachments());
+
+        if (paymentDto.getTransactionNumber() != null) {  // Changed from 'getReferenceNo' to 'getTransactionNumber'
+            paymentEntity.setTransactionNumber(paymentDto.getTransactionNumber());
         }
+
+        if (paymentDto.getAttachment() != null) {
+            paymentEntity.setAttachment(paymentDto.getAttachment());
+        }
+
         if (paymentDto.getNotes() != null) {
             paymentEntity.setNotes(paymentDto.getNotes());
         }
+
         if (paymentDto.getRefundable() != null) {
             paymentEntity.setRefundable(paymentDto.getRefundable());
         }
+
         if (paymentDto.getRefundableMode() != null) {
             paymentEntity.setRefundableMode(paymentDto.getRefundableMode());
         }
+
         PaymentEntity updatedEntity = paymentRepository.save(paymentEntity);
         PaymentDto updatedDto=mapperConfig.toPaymentDto(updatedEntity);
         // Map the updated entity to DTO and return

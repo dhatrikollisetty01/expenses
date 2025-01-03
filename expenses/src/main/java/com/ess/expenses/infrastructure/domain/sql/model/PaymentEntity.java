@@ -1,8 +1,6 @@
 package com.ess.expenses.infrastructure.domain.sql.model;
 
-import com.ess.expenses.core.utils.Refundable;
-import com.ess.expenses.core.utils.RefundableMode;
-import com.ess.expenses.core.utils.Type;
+import com.ess.expenses.core.utils.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,29 +22,35 @@ public class PaymentEntity {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @Column(name = "MY_COMPANY")
-    private String myCompany;
+    @Column(name="PAID_TO")
+    @Enumerated(EnumType.STRING)
+    private PaidTo paidTo;
+//    @Column(name = "MY_COMPANY")
+//    private String myCompany;
 
     @Column(name = "DEPARTMENT")
-    private String department;
+    @Enumerated(EnumType.STRING)
+    private Department department;
 
     @Column(name = "PRIMARY_CONTACT")
     private String primaryContact;
 
-    @Column(name = "PURPOSE")
-    private String purpose;
-
     @Column(name = "AMOUNT")
     private Double amount;
 
-    @Column(name = "DATE")
-    private Date date;
+    @Column(name = "PAID_DATE")
+    private Date paidDate;
+
+    @Column(name = "PURPOSE")
+    @Enumerated(EnumType.STRING)
+    private PurposeType purpose;
 
     @Column(name = "TRANSACTION_MODE")
-    private String transactionMode;
+    @Enumerated(EnumType.STRING)
+    private TransactionMode transactionMode;
 
-//    @Column(name = "REFERENCE_NO")
-//    private String referenceNo;
+    @Column(name = "TRANSACTION_NUMBER")
+    private String transactionNumber;
 
     @Column(name = "ATTACHMENT")
     private String attachment;
