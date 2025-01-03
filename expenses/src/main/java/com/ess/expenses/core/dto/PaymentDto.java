@@ -19,7 +19,7 @@ public class PaymentDto  {
     private String myCompany;
     private String department;
     private String primaryContact;
-    private String purpose;
+//    private String purpose;
     private Double amount;
     private Date date;
     private String transactionMode;

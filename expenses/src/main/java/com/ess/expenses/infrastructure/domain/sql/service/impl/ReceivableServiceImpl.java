@@ -7,6 +7,7 @@ import com.ess.expenses.infrastructure.domain.sql.model.ReceivableEntity;
 import com.ess.expenses.infrastructure.domain.sql.repository.ReceivableRepository;
 import com.ess.expenses.infrastructure.domain.sql.service.handler.MapperConfig;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public class ReceivableServiceImpl implements ReceivableService {
     private ReceivableRepository receivableRepository;
 
     @Override
-    public ApiResponse createReceivable(ExpensesReq expensesReq) {
+    public ApiResponse createReceivable(@Valid ExpensesReq expensesReq) {
         try {
             ReceivableEntity receivableEntity = mapperConfig.toReceivableEntity(expensesReq.getReceivable());
             ReceivableEntity saveEntity = receivableRepository.save(receivableEntity);
@@ -48,12 +49,12 @@ public class ReceivableServiceImpl implements ReceivableService {
 
     @Override
     public ApiResponse getAllReceivable() {
-            List<ReceivableDto> receivableDtos = receivableRepository.findAll().stream()
-                    .map(mapperConfig::toReceivableDto)
-                    .collect(Collectors.toList());
-            // Return Success Response with List of Payments
-            return new ApiResponse(true, "All receivable fetched successfully", receivableDtos);
-        }
+        List<ReceivableDto> receivableDto = receivableRepository.findAll().stream()
+                .map(mapperConfig::toReceivableDto)
+                .filter(receivable -> receivable.getDelFlag() == 1)
+                .collect(Collectors.toList());
+        return new ApiResponse(true, "All receivables fetched successfully", receivableDto);
+    }
 
 
     @Override
@@ -62,6 +63,8 @@ public class ReceivableServiceImpl implements ReceivableService {
         ReceivableEntity receivableEntity = receivableRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Receivable with ID " + id + " not found"));
 
+        // Map fields selectively
+        // Map fields selectively
         // Map fields selectively
         if (receivableDto.getType() != null) {
             receivableEntity.setType(receivableDto.getType());
@@ -72,16 +75,16 @@ public class ReceivableServiceImpl implements ReceivableService {
         if (receivableDto.getPrimaryContact() != null) {
             receivableEntity.setPrimaryContact(receivableDto.getPrimaryContact());
         }
-        if (receivableDto.getReceivedAmount() != null) {
+        if (receivableDto.getReceivedAmount() != null && !receivableDto.getReceivedAmount().isEmpty()) {
             receivableEntity.setReceivedAmount(receivableDto.getReceivedAmount());
         }
-        if (receivableDto.getServices() != null) {
-            receivableEntity.setServices(receivableDto.getServices());
+        if (receivableDto.getDescription() != null && !receivableDto.getDescription().isEmpty()) {
+            receivableEntity.setDescription(receivableDto.getDescription());
         }
-        if (receivableDto.getDate() != null) {
-            receivableEntity.setDate(receivableDto.getDate());
+        if (receivableDto.getReceivedDate() != null) {
+            receivableEntity.setReceivedDate(receivableDto.getReceivedDate());
         }
-        if (receivableDto.getInvoiceNumber() != null) {
+        if (receivableDto.getInvoiceNumber() != null && !receivableDto.getInvoiceNumber().isEmpty()) {
             receivableEntity.setInvoiceNumber(receivableDto.getInvoiceNumber());
         }
         if (receivableDto.getInvoiceDate() != null) {
@@ -93,28 +96,22 @@ public class ReceivableServiceImpl implements ReceivableService {
         if (receivableDto.getInvoiceAmount() != 0) {
             receivableEntity.setInvoiceAmount(receivableDto.getInvoiceAmount());
         }
-        if (receivableDto.getPaymentMode() != null) {
-            receivableEntity.setPaymentMode(receivableDto.getPaymentMode());
+        if (receivableDto.getTransactionMode() != null) {
+            receivableEntity.setTransactionMode(receivableDto.getTransactionMode());
         }
-        if (receivableDto.getReferenceNumber() != null) {
-            receivableEntity.setReferenceNumber(receivableDto.getReferenceNumber());
+        if (receivableDto.getTransactionNumber() != null && !receivableDto.getTransactionNumber().isEmpty()) {
+            receivableEntity.setTransactionNumber(receivableDto.getTransactionNumber());
         }
         if (receivableDto.getAdjustmentAmount() != 0) {
             receivableEntity.setAdjustmentAmount(receivableDto.getAdjustmentAmount());
         }
-        if (receivableDto.getNotes() != null) {
+        if (receivableDto.getNotes() != null && !receivableDto.getNotes().isEmpty()) {
             receivableEntity.setNotes(receivableDto.getNotes());
         }
-        if (receivableDto.getTotalReceivableAmount() != 0) {
-            receivableEntity.setTotalReceivableAmount(receivableDto.getTotalReceivableAmount());
-        }
+
         if (receivableDto.getReceivedAmountTillDate() != 0) {
             receivableEntity.setReceivedAmountTillDate(receivableDto.getReceivedAmountTillDate());
         }
-        if (receivableDto.getYetToReceivedAmount() != 0) {
-            receivableEntity.setYetToReceivedAmount(receivableDto.getYetToReceivedAmount());
-        }
-
         // Save the updated entity
         ReceivableEntity updatedEntity = receivableRepository.save(receivableEntity);
         ReceivableDto updatedDto = mapperConfig.toReceivableDto(updatedEntity);
@@ -125,25 +122,16 @@ public class ReceivableServiceImpl implements ReceivableService {
     @Override
     public ApiResponse softDeleteReceivable(Long id) {
         try {
-            // Validate the ID
             if (id == null) {
                 throw new IllegalArgumentException("The given ID must not be null.");
             }
-
-            // Retrieve the entity or throw an exception if not found
             ReceivableEntity receivableEntity = receivableRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Receivable with ID " + id + " not found"));
-
-            // Perform the soft delete by setting the delFlag to 1
-            receivableEntity.setDelFlag(1);
-
-            // Save the updated entity
+            receivableEntity.setDelFlag(0);
             ReceivableEntity updatedEntity = receivableRepository.save(receivableEntity);
             ReceivableDto deletedReceivable = mapperConfig.toReceivableDto(updatedEntity);
-            // Convert the entity to DTO
             return new ApiResponse(true, "Receivable successfully marked as deleted", deletedReceivable);
         } catch (EntityNotFoundException e) {
-            // Handle case where Payment was not found
             return new ApiResponse(false, e.getMessage(), null);
         }
     }

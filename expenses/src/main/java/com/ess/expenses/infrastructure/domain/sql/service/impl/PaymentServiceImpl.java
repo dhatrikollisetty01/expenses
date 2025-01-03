@@ -32,6 +32,7 @@ public class PaymentServiceImpl implements PaymentService {
             PaymentEntity savedEntity = paymentRepository.save(paymentEntity);
             PaymentDto paymentDto = mapperConfig.toPaymentDto(savedEntity);
             return new ApiResponse(true, "success", paymentDto);
+
         } catch (Exception e) {
             // Handle errors in Payment Creation
             return new ApiResponse(false, "Error in creating payment. Please try again!", null);
@@ -41,12 +42,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public ApiResponse getPaymentsById(Long id) {
         try {
-            // Retrieve Payment Entity by ID
             PaymentEntity paymentEntity = paymentRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Payment with ID " + id + " not found"));
-            // Convert Entity to DTO
             PaymentDto paymentDto = mapperConfig.toPaymentDto(paymentEntity);
-            // Return Success Response with Payment details
             return new ApiResponse(true, "Payment details found", paymentDto);
         } catch (EntityNotFoundException e) {
             // Handle exception when Payment is not found
@@ -58,10 +56,11 @@ public class PaymentServiceImpl implements PaymentService {
     public ApiResponse getAllPayments() {
         List<PaymentDto> paymentDto = paymentRepository.findAll().stream()
                 .map(mapperConfig::toPaymentDto)
+                .filter(payment -> payment.getDelFlag() == 1)
                 .collect(Collectors.toList());
-        // Return Success Response with List of Payments
         return new ApiResponse(true, "All payments fetched successfully", paymentDto);
     }
+
 
     @Transactional
     @Override
@@ -71,7 +70,7 @@ public class PaymentServiceImpl implements PaymentService {
             PaymentEntity paymentEntity = paymentRepository.findById(id)
                     .orElseThrow(() -> new EntityNotFoundException("Payment with ID " + id + " not found"));
 
-            // Mark Payment Entity as Deleted (Soft Delete)
+
             paymentEntity.setDelFlag(0); // Assuming 1 indicates deletion
             // Save the Soft Deleted Payment Entity
             PaymentEntity updatedEntity = paymentRepository.save(paymentEntity);
@@ -103,9 +102,9 @@ public class PaymentServiceImpl implements PaymentService {
         if (paymentDto.getPrimaryContact() != null) {
             paymentEntity.setPrimaryContact(paymentDto.getPrimaryContact());
         }
-        if (paymentDto.getPurpose() != null) {
-            paymentEntity.setPurpose(paymentDto.getPurpose());
-        }
+//        if (paymentDto.getPurpose() != null) {
+//            paymentEntity.setPurpose(paymentDto.getPurpose());
+//        }
         if (paymentDto.getAmount() != null) {
             paymentEntity.setAmount(paymentDto.getAmount());
         }
@@ -115,9 +114,9 @@ public class PaymentServiceImpl implements PaymentService {
         if (paymentDto.getTransactionMode() != null) {
             paymentEntity.setTransactionMode(paymentDto.getTransactionMode());
         }
-        if (paymentDto.getReferenceNo() != null) {
-            paymentEntity.setReferenceNo(paymentDto.getReferenceNo());
-        }
+//        if (paymentDto.getReferenceNo() != null) {
+//            paymentEntity.setReferenceNo(paymentDto.getReferenceNo());
+//        }
         if (paymentDto.getAttachments() != null) {
             paymentEntity.setAttachment(paymentDto.getAttachments());
         }

@@ -45,8 +45,8 @@ public class PaymentEntity {
     @Column(name = "TRANSACTION_MODE")
     private String transactionMode;
 
-    @Column(name = "REFERENCE_NO")
-    private String referenceNo;
+//    @Column(name = "REFERENCE_NO")
+//    private String referenceNo;
 
     @Column(name = "ATTACHMENT")
     private String attachment;

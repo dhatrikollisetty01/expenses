@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -32,22 +33,22 @@ public class PaymentController {
     }
 
     @GetMapping(PaymentConstants.GET_BY_ID)
-    public ResponseEntity<ApiResponse> getPaymentsById(@PathVariable Long Id){
-        ApiResponse response = paymentService.getPaymentsById(Id);
+    public ResponseEntity<ApiResponse> getPaymentsById(@PathVariable Long id){
+        ApiResponse response = paymentService.getPaymentsById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping(PaymentConstants.GET_ALL)
     public ResponseEntity<List<ApiResponse>> getAllPayments(){
         ApiResponse response= paymentService.getAllPayments();
-        return ResponseEntity.ok((List<ApiResponse>) response);
+        return ResponseEntity.ok(Collections.singletonList(response));
     }
     @PutMapping(PaymentConstants.UPDATE)
     public ResponseEntity<ApiResponse> updatePayments(@PathVariable Long id, @RequestBody PaymentDto paymentDto) {
         ApiResponse response = paymentService.updatePayments(id, paymentDto);
         return ResponseEntity.ok(response);
-
     }
+
 
     @DeleteMapping(PaymentConstants.DELETE)
     public ResponseEntity<ApiResponse> softDeletePayments(@PathVariable Long id) {
