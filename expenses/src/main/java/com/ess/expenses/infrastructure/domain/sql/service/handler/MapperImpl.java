@@ -12,7 +12,6 @@ public class MapperImpl implements MapperConfig {
     @Autowired
     private ModelMapper modelMapper;
 
-
     @Override
     public PaymentDto toPaymentDto(PaymentEntity paymentEntity) {
         PaymentDto paymentDto = modelMapper.map(paymentEntity,PaymentDto.class);
@@ -22,6 +21,6 @@ public class MapperImpl implements MapperConfig {
     @Override
     public PaymentEntity toPaymentEntity(PaymentDto paymentDto) {
         PaymentEntity paymentEntity = modelMapper.map(paymentDto,PaymentEntity.class);
-        return null;
+        return paymentEntity;
     }
 }
